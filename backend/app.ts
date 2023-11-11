@@ -43,6 +43,7 @@ app.post("/api/user/validation", (req, res) => {
 });
 
 app.get("/api/posts", async (req, res) => {
+  const token = req.headers["Authorization"];
   sleep(5000);
   // Sleep delay goes here
   res.json(posts);
@@ -83,7 +84,6 @@ app.post("/api/posts", (req, res) => {
 
     addPost(incomingPost, token);
     console.log("11111")
-    // res.json(posts);
     console.log("11343333111")
 
     res.status(200).json({ success: true });

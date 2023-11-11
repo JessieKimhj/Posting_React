@@ -1,5 +1,6 @@
 import { Response } from "express";
 
+
 export interface IDecodedUser {
   id: number;
 }
