@@ -12,14 +12,13 @@ import {
   Container,
   Group,
   Button,
-  Input,
 } from '@mantine/core';
+import classes from './Login.page.module.css';
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { loginService, authLoading, user } = useBoundStore((state) => state);
-  
-  //If the user logged in alreaday, user cannot see the login page
+
   useEffect(() => {
     if (!!user) {
       navigate("/posts");
@@ -35,37 +34,31 @@ const LoginPage = () => {
   };
   return (
     <Container size={420} my={40}>
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+      <Title ta="center" className={classes.title}>
+        Welcome back!
+      </Title>
+      {/* <Text c="dimmed" size="sm" ta="center" mt={5}>
+        Do not have an account yet?{' '}
+        <Anchor size="sm" component="button">
+          Create account
+        </Anchor>
+      </Text> */}
       <form onSubmit={onLogin}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gridGap: "20px",
-            padding: "50px",
-          }}
-        >
-          <Title>This is the login page</Title>
-          <Input label = "email"
-            placeholder="email"
-            name="email"
-            type="email"
-            required
-            style={{ minWidth: "320px", height: "26px" }}
-          />
-          <Input label = "password"
-            placeholder="password"
-            name="password"
-            type="password"
-            required
-            style={{ minWidth: "320px", height: "26px" }}
-          />
-          <Button type="submit">login</Button>
-          {authLoading ? <h2>Loading...</h2> : null}
-        </div>
+        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+          <TextInput label="Email" placeholder="you@mail.com" name="email" type="email" required />
+          <PasswordInput label="Password" placeholder="Your password" name="password" type="password" required mt="md" />
+          <Group justify="space-between" mt="lg">
+            <Checkbox label="Remember me" />
+            <Anchor component="button" size="sm">
+              Forgot password?
+            </Anchor>
+          </Group>
+          <Button type="sunmit" fullWidth mt="xl">
+            Sign in
+          </Button>
+          {authLoading ? <h2>Loading…</h2> : null}
+        </Paper>
       </form>
-      </Paper>
     </Container>
   );
 };
