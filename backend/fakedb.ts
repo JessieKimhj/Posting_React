@@ -32,7 +32,12 @@ export const posts = [
   },
 ];
 const jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
+function generateUniqueId() {
+  const timestamp = new Date().getTime();
+  const randomNum = Math.floor(Math.random() * 1000); 
+  const uniqueId = parseInt(`${timestamp}${randomNum}`, 10);
+  return uniqueId;
+}
 
 export const addPost = (post: any, token:string) => {
     try {
@@ -40,7 +45,7 @@ export const addPost = (post: any, token:string) => {
         const decodedToken = jwt.decode(token);
         if (decodedToken) {
           const userId = decodedToken.id;
-          post.id = uuidv4(); 
+          post.id = generateUniqueId(); 
           post.userId = userId;
           posts.push(post);
         }
@@ -60,7 +65,8 @@ export const verifyUser = (email: string, password: string) => {
 
 export const findUserById = (id: number) => {
   const user = users.find((user) => user.id === id);
-  if (!user) throw new Error("User not found");
+  console.log("findUserById?user??", user)
+  if (!user) throw new Error("User not found (findUserById)");
   return user;
 };
 

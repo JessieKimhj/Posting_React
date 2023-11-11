@@ -7,22 +7,21 @@ import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 
 export const PostPage = () => {
-  const posts = useLoaderData();// load한 데이터를 가져옴
-
-  const [visible] = useDisclosure(true); // Set visible to true initially
+  const posts = useLoaderData();
+  const [visible] = useDisclosure(true); 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         console.error("setLoading(true)");
-        setLoading(true); // API 호출 전에 로딩 상태를 true로 설정
+        setLoading(true);
         const res = await axios.get(`${DOMAIN}/api/posts`);
         console.error("setLoading(false)");
-        setLoading(false); // API 호출 후에 로딩 상태를 false로 설정
+        setLoading(false);
       } catch (e) {
         console.error("Error fetching data:", e);
-        setLoading(false); // 에러 발생 시에도 로딩 상태를 false로 설정
+        setLoading(false); 
       }
     };
 

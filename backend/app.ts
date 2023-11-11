@@ -35,6 +35,7 @@ app.post("/api/user/validation", (req, res) => {
     const authHeader = req.headers.authorization;
     const token = parseToken(authHeader, res);
     const decodedUser = jwt.verify(token, "secrethyunjinjessie58939652");
+
     const user = findUserById((decodedUser as IDecodedUser).id);
     res.json({ result: { user, token } });
   } catch (error) {
@@ -46,21 +47,21 @@ app.get("/api/posts", async (req, res) => {
   const token = req.headers["Authorization"];
   sleep(5000);
   // Sleep delay goes here
+  console.log("postsPageDB:",posts)
   res.json(posts);
 });
 
 app.get("/api/posts/:id", (req, res) => {
   const id = Number(req.params.id);
-  const userName = findUserById(id).email.split('@')[0];
-  const findedPost = posts.find((findPost) => findPost.id === id);
+  const findpost = posts.find((postid) => postid.id === id);
+  const userId = Number(findpost?.userId)
+  const userName = findUserById(userId).email.split('@')[0]; 
 
-  if (findedPost) {
+  if (findpost) {
     const post = {
-      ...findedPost,
+      ...findpost,
       userName: userName}
-      console.log("::::idpage", post)
     res.json(post);
-    // console.log("::::idpage", post)
   } else {
     res.status(404).json({ error: "Post not found" });
   }
@@ -83,8 +84,7 @@ app.post("/api/posts", (req, res) => {
     console.log("2323")
 
     addPost(incomingPost, token);
-    console.log("11111")
-    console.log("11343333111")
+    console.log("incomnig")
 
     res.status(200).json({ success: true });
   } catch (error) {
